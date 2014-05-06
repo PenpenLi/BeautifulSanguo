@@ -37,10 +37,6 @@ public class UseDB
     {
         get
         {
-			//if (_GameDB == null)
-			//{
-			//	_GameDB = new CMySQL("127.0.0.1", "Sanguo", "sa", "koske1984");
-			//}
 			try
 			{
 				_GameDB = new CMySQL("127.0.0.1", "Sanguo", "sa", "koske1984");
@@ -60,10 +56,6 @@ public class UseDB
     {
         get
         {
-			//if (_GameLogDB == null)
-			//{
-			//	_GameLogDB = new CMySQL("127.0.0.1", "Sanguo", "sa", "koske1984");
-			//}
 			try
 			{
 				_GameLogDB = new CMySQL("127.0.0.1", "Sanguo", "sa", "koske1984");

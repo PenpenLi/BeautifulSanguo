@@ -28,7 +28,7 @@ public partial class GameService : System.Web.Services.WebService
         List<List<object>> listDBResult = null;
         Dictionary<string, object> dictResult = new Dictionary<string,object>();
         // 先檢查帳號是否存在
-        strCommand = string.Format("select count(*) from A_Account where Account = '{0}'", strAccount);
+        strCommand = string.Format("select count(*) from a_account where Account = '{0}'", strAccount);
         listDBResult = UseDB.AccountDB.DoQueryCommand(strCommand);
         int iNumber = System.Convert.ToInt32(listDBResult[0][0]);
         if (iNumber != 0)
@@ -38,7 +38,7 @@ public partial class GameService : System.Web.Services.WebService
             return Json.Serialize (dictResult);
         }
         // 做塞入帳號的動作
-        strCommand = string.Format("insert into A_Account (Account, Password) values ('{0}', '{1}')", strAccount, strPassword);
+        strCommand = string.Format("insert into a_account (Account, Password) values ('{0}', '{1}')", strAccount, strPassword);
         UseDB.AccountDB.DoCommand(strCommand);
         // 傳回完成
         dictResult["Result"] = ErrorID.Success;

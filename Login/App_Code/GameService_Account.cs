@@ -58,7 +58,7 @@ public partial class GameService : System.Web.Services.WebService
         string strPassword = dictInfo["Password"].ToString();
 
         // 檢查帳號的存在性
-        strCommand = string.Format("select AccountID, Password, PlayerID from A_Account where Account = '{0}'", strAccount);
+        strCommand = string.Format("select AccountID, Password, PlayerID from a_account where Account = '{0}'", strAccount);
         listDBResult = UseDB.AccountDB.DoQueryCommand(strCommand);
         if (listDBResult.Count == 0)
         {
@@ -77,7 +77,7 @@ public partial class GameService : System.Web.Services.WebService
 
         // 更新 session key 和登入時間
         string strSessionKey = GetSessionKey(strAccount);
-        strCommand = string.Format("update A_Account set SessionKey='{0}', UpdateDate='{1}' where AccountID={2}", strSessionKey, Utility.GetDBDateTime(), AccountID);
+        strCommand = string.Format("update a_account set SessionKey='{0}', UpdateDate='{1}' where AccountID={2}", strSessionKey, Utility.GetDBDateTime(), AccountID);
         UseDB.GameDB.DoQueryCommand(strCommand);
 
         // 回傳結果
@@ -114,7 +114,7 @@ public partial class GameService : System.Web.Services.WebService
         Dictionary<string, object> dictResult = new Dictionary<string, object>();
         string strCommand = "";
         List<List<object>> listDBResult = null;
-        strCommand = string.Format("select AccountID, Account, PlayerID, UpdateDate from A_Account where SessionKey='{0}'", SessionKey);
+        strCommand = string.Format("select AccountID, Account, PlayerID, UpdateDate from a_account where SessionKey='{0}'", SessionKey);
         listDBResult = UseDB.GameDB.DoQueryCommand(strCommand);
         if (listDBResult.Count == 0)
         {
