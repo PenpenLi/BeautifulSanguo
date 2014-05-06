@@ -5,7 +5,7 @@ using MySql.Data.MySqlClient;
 /// <summary>
 /// CMySQL 的摘要描述
 /// </summary>
-public class CMySQL
+public class CMySQL : ISQL
 {
     // 連線字串
     string m_strConnect = "";
