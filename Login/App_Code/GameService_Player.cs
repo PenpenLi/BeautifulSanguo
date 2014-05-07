@@ -16,5 +16,46 @@ using System.Web.Security;
 // 若要允許使用 ASP.NET AJAX 從指令碼呼叫此 Web 服務，請取消註解下一行。
 public partial class GameService : System.Web.Services.WebService
 {
+    #region 取得玩家屬性
 
+    [WebMethod]
+    [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    public string Test_Player_GetAttr()
+    {
+        Dictionary<string, object> dictResult = new Dictionary<string, object>();
+        return Player_GetAttr(Json.Serialize(dictResult));
+    }
+    [WebMethod]
+    [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    public string Player_GetAttr(string strJson)
+    {
+        // 先寫一筆 Log
+        int LogID = ReportDBLog("Player_GetAttr", strJson);
+        Dictionary<string, object> dictResult = new Dictionary<string, object>();
+        string strCommand = "";
+        List<List<object>> listDBResult = null;
+        // 先解析資料
+        Dictionary<string, object> dictInfo = Json.Deserialize(strJson) as Dictionary<string, object>;
+        if (dictInfo == null)
+        {
+            return ReportTheResult(dictResult, ErrorID.SessionError, LogID);
+        }
+        string SessionKey = dictInfo["SessionKey"].ToString();
+
+        // 先轉 Session Key
+        Dictionary<string, object> dictAccount = GetAccountInfoBySessionKey(SessionKey);
+        if (dictAccount == null)
+        {
+            return ReportTheResult(dictResult, ErrorID.SessionError, LogID);
+        }
+        int PlayerID = System.Convert.ToInt32(dictAccount["PlayerID"]);
+        if (PlayerID == 0)
+        {
+            return ReportTheResult(dictResult, ErrorID.Player_GetAttr_No_Player_ID, LogID);
+        }
+
+        return ReportTheResult(dictResult, ErrorID.Success, LogID);
+    }
+
+    #endregion
 }

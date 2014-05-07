@@ -47,8 +47,6 @@ public enum ErrorID : int
 
     #endregion
 
-    #region Check_Account 的錯誤
-
     [ErrorIDMapAttribute("沒有帳號資料")]
     Check_Account_No_Account = 10001,
     [ErrorIDMapAttribute("沒有密碼資料")]
@@ -58,14 +56,11 @@ public enum ErrorID : int
     [ErrorIDMapAttribute("密碼錯誤")]
     Check_Account_No_Such_Password = 10004,
 
-    #endregion
-
-    #region 創角
-
     [ErrorIDMapAttribute("己有角色存在")]
     Account_CreatePlayer_Exist_Player = 10101,
 
-    #endregion
+    [ErrorIDMapAttribute("沒有角色編號")]
+    Player_GetAttr_No_Player_ID = 10201,
 
 }
 

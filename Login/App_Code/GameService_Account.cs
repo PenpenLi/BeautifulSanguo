@@ -1,6 +1,6 @@
 ﻿// Author : dandanshih
 // Desc : 帳號相關的程式都需要放在這裏處理
-// [problem] 可以使用 exception 來簡化修改
+
 
 using System;
 using System.Collections.Generic;
@@ -44,16 +44,12 @@ public partial class GameService : System.Web.Services.WebService
         // 取得資料
         if (dictInfo.ContainsKey("Account") == false)
         {
-            dictResult["Result"] = ErrorID.Check_Account_No_Account;
-            ReportDBLog("Account_Check No Account", Json.Serialize(dictResult), LogID);
-            return Json.Serialize(dictResult);
+            return ReportTheResult(dictResult, ErrorID.Check_Account_No_Account, LogID);
         }
         string strAccount = dictInfo["Account"].ToString();
         if (dictInfo.ContainsKey("Password") == false)
         {
-            dictResult["Result"] = ErrorID.Check_Account_No_Password;
-            ReportDBLog("Account_Check Not Password", Json.Serialize(dictResult), LogID);
-            return Json.Serialize(dictResult);
+            return ReportTheResult(dictResult, ErrorID.Check_Account_No_Password, LogID);
         }
         string strPassword = dictInfo["Password"].ToString();
 
@@ -62,17 +58,13 @@ public partial class GameService : System.Web.Services.WebService
         listDBResult = UseDB.AccountDB.DoQueryCommand(strCommand);
         if (listDBResult.Count == 0)
         {
-            dictResult["Result"] = ErrorID.Check_Account_No_Such_Account;
-            ReportDBLog("Account_Check Not Such Account", Json.Serialize(dictResult), LogID);
-            return Json.Serialize(dictResult);
+            return ReportTheResult(dictResult, ErrorID.Check_Account_No_Such_Account, LogID);
         }
         int AccountID = System.Convert.ToInt32(listDBResult[0][0]);
         string Password = listDBResult[0][1].ToString();
         if (Password != strPassword)
         {
-            dictResult["Result"] = ErrorID.Check_Account_No_Such_Password;
-            ReportDBLog("Account_Check Not Such Password", Json.Serialize(dictResult), LogID);
-            return Json.Serialize(dictResult);
+            return ReportTheResult(dictResult, ErrorID.Check_Account_No_Such_Password, LogID);
         }
 
         // 更新 session key 和登入時間
@@ -97,8 +89,8 @@ public partial class GameService : System.Web.Services.WebService
             // 進入主流程
             AddClientAction(dictResult, ClientAction.ToLogin ());
         }
-        ReportDBLog("Account_Check Success", Json.Serialize(dictResult), LogID);
-        return Json.Serialize(dictResult);
+
+        return ReportTheResult(dictResult, ErrorID.Success, LogID);
     }
 
     // 取得 session Key
@@ -130,7 +122,6 @@ public partial class GameService : System.Web.Services.WebService
 
     #endregion
 
-
     #region 創角動作
 
     [WebMethod]
@@ -139,6 +130,7 @@ public partial class GameService : System.Web.Services.WebService
     {
         Dictionary<string, object> dictResult = new Dictionary<string, object>();
         dictResult["SessionKey"] = "SessionKey:dandan";
+        dictResult["PlayerName"] = "dandan";
         Account_CreatePlayer(Json.Serialize(dictResult));
         return "Test_Account_CreatePlayer";
     }
@@ -159,15 +151,11 @@ public partial class GameService : System.Web.Services.WebService
         Dictionary<string, object> dictInfo = Json.Deserialize(strJson) as Dictionary<string, object>;
         if (dictInfo == null)
         {
-            dictResult["Result"] = ErrorID.Json_Format_Error;
-            ReportDBLog("Account_CreatePlayer Json Format Error", Json.Serialize(dictResult), LogID);
-            return Json.Serialize(dictResult);
+            return ReportTheResult(dictResult, ErrorID.Json_Format_Error, LogID);
         }
         if (dictInfo.ContainsKey ("SessionKey") == false)
         {
-            dictResult["Result"] = ErrorID.No_SessionKey;
-            ReportDBLog("No SessionKey", Json.Serialize(dictResult), LogID);
-            return Json.Serialize(dictResult);
+            return ReportTheResult(dictResult, ErrorID.No_SessionKey, LogID);
         }
         string SessionKey = dictInfo["SessionKey"].ToString();
 
@@ -175,9 +163,7 @@ public partial class GameService : System.Web.Services.WebService
         Dictionary<string, object> dictAccount = GetAccountInfoBySessionKey(SessionKey);
         if (dictAccount == null)
         {
-            dictResult["Result"] = ErrorID.SessionError;
-            ReportDBLog("Session Error", Json.Serialize(dictResult), LogID);
-            return Json.Serialize(dictResult);
+            return ReportTheResult(dictResult, ErrorID.SessionError, LogID);
         }
         int AccountID = System.Convert.ToInt32(dictAccount["AccountID"]);
 
@@ -185,9 +171,7 @@ public partial class GameService : System.Web.Services.WebService
         int PlayerID = System.Convert.ToInt32(dictAccount["PlayerID"]);
         if (PlayerID != 0)
         {
-            dictResult["Result"] = ErrorID.Account_CreatePlayer_Exist_Player;
-            ReportDBLog("Account_CreatePlayer Exist Player", Json.Serialize(dictResult), LogID);
-            return Json.Serialize(dictResult);
+            return ReportTheResult(dictResult, ErrorID.Account_CreatePlayer_Exist_Player, LogID);
         }
 
         // 取得創角資料和建立角色
@@ -200,11 +184,19 @@ public partial class GameService : System.Web.Services.WebService
         {
             PlayerName = dictInfo["PlayerName"].ToString();
         }
+        dictResult["PlayerName"] = PlayerName;
+
         strCommand = string.Format("insert into a_member (PlayerName) values ('{0}');SELECT LAST_INSERT_ID();", PlayerName);
         listDBResult = UseDB.GameDB.DoQueryCommand(strCommand);
+        PlayerID = System.Convert.ToInt32(listDBResult[0][0]);
+        dictResult["PlayerID"] = PlayerID;
+
+        // 塞回去 Account 中
+        strCommand = string.Format("update a_account set PlayerID={0} where AccountID={1}", PlayerID, AccountID);
+        UseDB.GameDB.DoCommand(strCommand);
 
         // 進入主流程
-        return Json.Serialize(dictResult);
+        return ReportTheResult(dictResult, ErrorID.Success, LogID);
     }
 
     // [Todo] 從 DB 取得亂數姓名
