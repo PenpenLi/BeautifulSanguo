@@ -38,7 +38,7 @@ public partial class GameService : System.Web.Services.WebService
     {
         strMethodName = Utility.TranslateDBString(strMethodName);
         strJosn = Utility.TranslateDBString(strJosn);
-        string strCommand = string.Format("insert into L_WebMethod (MethodName, Args, PID) values ('{0}', '{1}', {2});SELECT LAST_INSERT_ID();", strMethodName, strJosn, PID);
+		string strCommand = string.Format("insert into L_WebMethod (MethodName, Args, PID) values ('{0}', '{1}', {2})"+UseDB.GETID, strMethodName, strJosn, PID);
         List<List<object>> listDBResult = UseDB.GameLogDB.DoQueryCommand(strCommand);
         int LogID = System.Convert.ToInt32(listDBResult[0][0]);
         return LogID;

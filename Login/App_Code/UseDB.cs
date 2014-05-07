@@ -9,6 +9,20 @@ using System.Collections.Generic;
 
 public class UseDB
 {
+	static string _MySQLID = ";SELECT LAST_INSERT_ID();";
+	static string _MSSQLID = ";SELECT @@IDENTITY;";
+	static bool _IsMySQL = true;
+	public static string GETID
+	{
+		get
+		{
+			if (_IsMySQL)
+				return _MySQLID;
+			else
+				return _MSSQLID;
+		}
+	}
+	
     #region 帳號 DB
     private static ISQL _AccountDB = null;
 	public static ISQL AccountDB
@@ -23,7 +37,8 @@ public class UseDB
 				}
 				catch
 				{
-					_AccountDB = new CMSSQL("db.08online.rd1.sgt", "51098", "Demo", "sa", "sqlgosmio2749");
+					_AccountDB = new CMSSQL("db.08online.rd1.sgt", "51095", "Demo", "sa", "sqlgosmio2749");
+					_IsMySQL = false;
 				}
             }
             return _AccountDB;
@@ -43,7 +58,8 @@ public class UseDB
 			}
 			catch
 			{
-				_GameDB = new CMSSQL("db.08online.rd1.sgt", "51098", "Demo", "sa", "sqlgosmio2749");
+				_GameDB = new CMSSQL("db.08online.rd1.sgt", "51095", "Demo", "sa", "sqlgosmio2749");
+				_IsMySQL = false;
 			}
 			return _GameDB;
         }
@@ -62,7 +78,8 @@ public class UseDB
 			}
 			catch
 			{
-				_GameLogDB = new CMSSQL("db.08online.rd1.sgt", "51098", "Demo", "sa", "sqlgosmio2749");
+				_GameLogDB = new CMSSQL("db.08online.rd1.sgt", "51095", "Demo", "sa", "sqlgosmio2749");
+				_IsMySQL = false;
 			}
 			return _GameLogDB;
         }

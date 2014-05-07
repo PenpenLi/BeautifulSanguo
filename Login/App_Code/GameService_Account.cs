@@ -189,7 +189,7 @@ public partial class GameService : System.Web.Services.WebService
         }
         dictResult["PlayerName"] = PlayerName;
 
-        strCommand = string.Format("insert into a_member (PlayerName) values ('{0}');SELECT LAST_INSERT_ID();", PlayerName);
+        strCommand = string.Format("insert into a_member (PlayerName) values ('{0}')"+UseDB.GETID, PlayerName);
         listDBResult = UseDB.GameDB.DoQueryCommand(strCommand);
         PlayerID = System.Convert.ToInt32(listDBResult[0][0]);
         dictResult["PlayerID"] = PlayerID;

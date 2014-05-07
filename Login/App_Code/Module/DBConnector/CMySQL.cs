@@ -12,6 +12,9 @@ public class CMySQL : ISQL
 	public CMySQL(string strIP, string strDB, string strUser, string strPassword)
 	{
         m_strConnect = string.Format("server={0};uid={1};pwd={2};database={3};charset=utf8", strIP, strUser, strPassword, strDB);
+		MySqlConnection conn = new MySqlConnection(m_strConnect);
+		conn.Open();
+		conn.Close();
 	}
 
     #region 連線開始關閉功能

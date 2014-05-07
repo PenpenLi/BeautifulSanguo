@@ -1,0 +1,3 @@
+. 看看能不能把 mysql 的 schema dump 出來成一個
+
+. 看看能不能把資料和 schema 分開 dump 出來
