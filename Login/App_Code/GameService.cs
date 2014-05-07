@@ -20,6 +20,9 @@ public partial class GameService : System.Web.Services.WebService
     // 建構子的處理
     public GameService()
     {
+        System.IO.FileInfo FI = new System.IO.FileInfo(Server.MapPath (".") + "\\log4net.config");
+        log4net.Config.XmlConfigurator.Configure(FI);
+        log4net.LogManager.GetLogger("GameService").ErrorFormat("Test log4net");
     }
 
     // 做 Client 的行為定義
