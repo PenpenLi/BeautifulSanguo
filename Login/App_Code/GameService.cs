@@ -69,10 +69,13 @@ public partial class GameService : System.Web.Services.WebService
 
     #endregion
 
+    // 統一的錯誤處理
     string ReportTheResult(Dictionary<string, object> dictResult, ErrorID IErrorID, int LogID)
     {
         dictResult["Result"] = IErrorID;
         ReportDBLog(IDMap.GetEnumAttribute(IErrorID), Json.Serialize(IErrorID), LogID);
         return Json.Serialize(dictResult);
     }
+
+
 }
