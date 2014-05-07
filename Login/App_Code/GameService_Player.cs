@@ -23,6 +23,8 @@ public partial class GameService : System.Web.Services.WebService
     [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
     public string Test_Player_GetAttr()
     {
+		log4net.LogManager.GetLogger("Test_Player_GetAttr").Debug("Test");
+		return "";
         Dictionary<string, object> dictResult = new Dictionary<string, object>();
         return Player_GetAttr(JsonConvert.SerializeObject(dictResult));
     }
