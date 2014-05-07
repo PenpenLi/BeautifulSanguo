@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Services;
 using System.Web.Security;
-
+using Newtonsoft.Json;
 /// <summary>
 /// WebService 的摘要描述
 /// </summary>
@@ -34,15 +34,15 @@ public partial class GameService : System.Web.Services.WebService
         if (iNumber != 0)
         {
             dictResult["Result"] = ErrorID.Agent_Account_Create_Duplicate_Account;
-            ReportDBLog ("Agent_Account_Create Duplication Account", Json.Serialize (dictResult), LogID);
-            return Json.Serialize (dictResult);
+            ReportDBLog ("Agent_Account_Create Duplication Account", JsonConvert.SerializeObject (dictResult), LogID);
+            return JsonConvert.SerializeObject (dictResult);
         }
         // 做塞入帳號的動作
         strCommand = string.Format("insert into a_account (Account, Password) values ('{0}', '{1}')", strAccount, strPassword);
         UseDB.AccountDB.DoCommand(strCommand);
         // 傳回完成
         dictResult["Result"] = ErrorID.Success;
-        ReportDBLog ("Agent_Account_Create Success", Json.Serialize (dictResult), LogID);
-        return Json.Serialize (dictResult);
+        ReportDBLog ("Agent_Account_Create Success", JsonConvert.SerializeObject (dictResult), LogID);
+        return JsonConvert.SerializeObject (dictResult);
     }
 }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Services;
 using System.Web.Security;
+using Newtonsoft.Json;
 
 /// <summary>
 /// WebService 的摘要描述
@@ -25,7 +26,7 @@ public partial class GameService : System.Web.Services.WebService
         Dictionary<string, object> dictResult = new Dictionary<string, object>();
         dictResult["Account"] = "dandan";
         dictResult["Password"] = "silveran";
-        Account_Check(Json.Serialize(dictResult));
+        Account_Check(JsonConvert.SerializeObject(dictResult));
         return "Finish Test_Account_Check:" + strResult;
     }
 
@@ -38,7 +39,8 @@ public partial class GameService : System.Web.Services.WebService
         int LogID = ReportDBLog("Account_Check", strJson);
         // 開始準備做處理
         Dictionary<string, object> dictResult = new Dictionary<string, object>();
-        Dictionary<string, object> dictInfo = Json.Deserialize(strJson) as Dictionary<string, object>;
+//        Dictionary<string, object> dictInfo = Json.Deserialize(strJson) as Dictionary<string, object>;
+		Dictionary<string, object> dictInfo = JsonConvert.DeserializeObject<Dictionary<string, object>>(strJson);
         string strCommand = "";
         List<List<object>> listDBResult = null;
         // 取得資料
@@ -110,7 +112,7 @@ public partial class GameService : System.Web.Services.WebService
         listDBResult = UseDB.GameDB.DoQueryCommand(strCommand);
         if (listDBResult.Count == 0)
         {
-            ReportDBLog(Json.Serialize(ErrorID.SessionError), IDMap.GetEnumAttribute(ErrorID.SessionError));
+            ReportDBLog(JsonConvert.SerializeObject(ErrorID.SessionError), IDMap.GetEnumAttribute(ErrorID.SessionError));
             return null;
         }
         dictResult["AccountID"] = listDBResult[0][0];
@@ -131,7 +133,7 @@ public partial class GameService : System.Web.Services.WebService
         Dictionary<string, object> dictResult = new Dictionary<string, object>();
         dictResult["SessionKey"] = "SessionKey:dandan";
         dictResult["PlayerName"] = "dandan";
-        Account_CreatePlayer(Json.Serialize(dictResult));
+        Account_CreatePlayer(JsonConvert.SerializeObject(dictResult));
         return "Test_Account_CreatePlayer";
     }
 
@@ -148,7 +150,8 @@ public partial class GameService : System.Web.Services.WebService
         Dictionary<string, object> dictResult = new Dictionary<string, object>();
 
         // 取得資料
-        Dictionary<string, object> dictInfo = Json.Deserialize(strJson) as Dictionary<string, object>;
+        //Dictionary<string, object> dictInfo = Json.Deserialize(strJson) as Dictionary<string, object>;
+		Dictionary<string, object> dictInfo = JsonConvert.DeserializeObject<Dictionary<string, object>>(strJson);
         if (dictInfo == null)
         {
             return ReportTheResult(dictResult, ErrorID.Json_Format_Error, LogID);

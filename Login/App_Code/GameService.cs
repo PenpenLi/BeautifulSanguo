@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Services;
 using System.Web.Security;
 using System.Reflection;
+using Newtonsoft.Json;
 
 /// <summary>
 /// WebService 的摘要描述
@@ -48,13 +49,15 @@ public partial class GameService : System.Web.Services.WebService
     // 統一的入口
     [WebMethod]
     [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
-    public string Web_Method(string jsonInfo)
+    public string Web_Method(string strJson)
     {
-        Dictionary<string, object> dictInfo = Json.Deserialize(jsonInfo) as Dictionary<string, object>;
+//        Dictionary<string, object> dictInfo = Json.Deserialize(jsonInfo) as Dictionary<string, object>;
+		Dictionary<string, object> dictInfo = JsonConvert.DeserializeObject<Dictionary<string, object>>(strJson);
         Dictionary<string, object> dictResult = new Dictionary<string, object>();
         if (dictInfo.ContainsKey("MethodName") == false)
         {
-            return Json.Serialize (dictResult);
+//            return Json.Serialize (dictResult);
+			return JsonConvert.SerializeObject(dictResult);
         }
         // 做動態的呼叫
         return DynamicCallGameService(dictInfo["MethodName"].ToString(), dictInfo);
@@ -73,9 +76,15 @@ public partial class GameService : System.Web.Services.WebService
     string ReportTheResult(Dictionary<string, object> dictResult, ErrorID IErrorID, int LogID)
     {
         dictResult["Result"] = IErrorID;
-        ReportDBLog(IDMap.GetEnumAttribute(IErrorID), Json.Serialize(IErrorID), LogID);
-        return Json.Serialize(dictResult);
+		//ReportDBLog(IDMap.GetEnumAttribute(IErrorID), Json.Serialize(IErrorID), LogID);
+		//return Json.Serialize(dictResult);
+		ReportDBLog(IDMap.GetEnumAttribute(IErrorID), JsonConvert.SerializeObject (IErrorID), LogID);
+        return JsonConvert.SerializeObject(dictResult);
     }
 
+	//// 做輸出的處理
+	//Dictionary<string, object> PaserArgs(string strJson, out Dictionary<string, object> dictInfo)
+	//{
+	//}
 
 }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Services;
 using System.Web.Security;
+using Newtonsoft.Json;
 
 /// <summary>
 /// WebService 的摘要描述
@@ -23,7 +24,7 @@ public partial class GameService : System.Web.Services.WebService
     public string Test_Player_GetAttr()
     {
         Dictionary<string, object> dictResult = new Dictionary<string, object>();
-        return Player_GetAttr(Json.Serialize(dictResult));
+        return Player_GetAttr(JsonConvert.SerializeObject(dictResult));
     }
     [WebMethod]
     [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
@@ -35,7 +36,8 @@ public partial class GameService : System.Web.Services.WebService
         string strCommand = "";
         List<List<object>> listDBResult = null;
         // 先解析資料
-        Dictionary<string, object> dictInfo = Json.Deserialize(strJson) as Dictionary<string, object>;
+        //Dictionary<string, object> dictInfo = Json.Deserialize(strJson) as Dictionary<string, object>;
+		Dictionary<string, object> dictInfo = JsonConvert.DeserializeObject<Dictionary<string, object>>(strJson);
         if (dictInfo == null)
         {
             return ReportTheResult(dictResult, ErrorID.SessionError, LogID);
