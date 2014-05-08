@@ -16,7 +16,21 @@ using Newtonsoft.Json;
 // 若要允許使用 ASP.NET AJAX 從指令碼呼叫此 Web 服務，請取消註解下一行。
 public partial class GameService : System.Web.Services.WebService
 {
-    // 產生帳號的功能
+	[WebMethod]
+	[System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+	public string Agent_Player_Stop(string AccountName, int IsStop)
+	{
+		// 先寫一筆 Log 進去
+		int LogID = ReportDBLog("Agent_Player_Stop", string.Format("{0},{1}", AccountName, IsStop));
+		// 先找看看有沒有該玩家
+
+		// 對該玩家做停權的行為
+		string strCommand = string.Format("update a_account set IsStop = {0}, StopDate = '{1}' where Account = '{2}'", IsStop, Utility.GetDBDateTime(), AccountName);
+		UseDB.GameDB.DoCommand(strCommand);
+		return "Agent_Player_Stop : IsStop : " + IsStop.ToString();
+	}
+
+	// 產生帳號的功能
     [WebMethod]
     [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
     public string Agent_Account_Create(string strAccount, string strPassword)
@@ -38,10 +52,13 @@ public partial class GameService : System.Web.Services.WebService
             return JsonConvert.SerializeObject (dictResult);
         }
         // 做塞入帳號的動作
-        strCommand = string.Format("insert into a_account (Account, Password) values ('{0}', '{1}')", strAccount, strPassword);
+		string strSessionKey = GetSessionKey(strAccount);
+		strCommand = string.Format("insert into a_account (Account, Password, SessionKey) values ('{0}', '{1}', '{2}')", strAccount, strPassword, strSessionKey);
         UseDB.AccountDB.DoCommand(strCommand);
+
         // 傳回完成
         dictResult["Result"] = ErrorID.Success;
+		dictResult["SessionKey"] = strSessionKey;
         ReportDBLog ("Agent_Account_Create Success", JsonConvert.SerializeObject (dictResult), LogID);
         return JsonConvert.SerializeObject (dictResult);
     }
