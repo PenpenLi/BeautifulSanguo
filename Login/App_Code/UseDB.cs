@@ -9,9 +9,13 @@ using System.Collections.Generic;
 
 public class UseDB
 {
+	#region 做 DB 型別的判定
+	static bool _IsMySQL = false;
+	#endregion
+
+	#region 取得 UID 的字串
 	static string _MySQLID = ";SELECT LAST_INSERT_ID();";
 	static string _MSSQLID = ";SELECT @@IDENTITY;";
-	static bool _IsMySQL = true;
 	public static string GETID
 	{
 		get
@@ -22,9 +26,10 @@ public class UseDB
 				return _MSSQLID;
 		}
 	}
-	
-    #region 帳號 DB
-    private static ISQL _AccountDB = null;
+	#endregion
+
+	#region 帳號 DB
+	private static ISQL _AccountDB = null;
 	public static ISQL AccountDB
     {
         get

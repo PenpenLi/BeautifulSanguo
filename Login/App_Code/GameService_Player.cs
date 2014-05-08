@@ -24,37 +24,43 @@ public partial class GameService : System.Web.Services.WebService
     public string Test_Player_GetAttr()
     {
         Dictionary<string, object> dictResult = new Dictionary<string, object>();
+		dictResult["SessionKey"] = "SessionKey:dandan";
         return Player_GetAttr(JsonConvert.SerializeObject(dictResult));
     }
+
     [WebMethod]
     [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
     public string Player_GetAttr(string strJson)
     {
-        // 先寫一筆 Log
-        int LogID = ReportDBLog("Player_GetAttr", strJson);
-        Dictionary<string, object> dictResult = new Dictionary<string, object>();
-        string strCommand = "";
-        List<List<object>> listDBResult = null;
-        // 先解析資料
-        //Dictionary<string, object> dictInfo = Json.Deserialize(strJson) as Dictionary<string, object>;
-		Dictionary<string, object> dictInfo = JsonConvert.DeserializeObject<Dictionary<string, object>>(strJson);
-        if (dictInfo == null)
-        {
-            return ReportTheResult(dictResult, ErrorID.SessionError, LogID);
-        }
-        string SessionKey = dictInfo["SessionKey"].ToString();
+		string strCommand = "";
+		List<List<object>> listDBResult = null;
 
-        // 先轉 Session Key
-        Dictionary<string, object> dictAccount = GetAccountInfoBySessionKey(SessionKey);
-        if (dictAccount == null)
-        {
-            return ReportTheResult(dictResult, ErrorID.SessionError, LogID);
-        }
-        int PlayerID = System.Convert.ToInt32(dictAccount["PlayerID"]);
+		// 先寫一筆 Log
+        int LogID = ReportDBLog("Player_GetAttr", strJson);
+        Dictionary<string, object> dictResult = null;
+
+        // 先解析資料
+		Dictionary<string, object> dictInfo = new Dictionary<string, object>();
+		dictResult = PaserArgs(strJson, LogID, out dictInfo);
+		if (dictResult != null)
+		{
+			return JsonConvert.SerializeObject(dictResult);
+		}
+		dictResult = new Dictionary<string, object>();
+
+		// 取得帳號分析
+		int PlayerID = System.Convert.ToInt32(dictInfo["PlayerID"]);
         if (PlayerID == 0)
         {
             return ReportTheResult(dictResult, ErrorID.Player_GetAttr_No_Player_ID, LogID);
         }
+
+		// 取得資料
+		strCommand = string.Format("select PlayerName, Money, Coin from a_member where PlayerID = {0}", PlayerID);
+		listDBResult = UseDB.GameDB.DoQueryCommand(strCommand);
+		dictResult["PlayerName"] = listDBResult[0][0];
+		dictResult["Money"] = listDBResult[0][1];
+		dictResult["Coin"] = listDBResult[0][2];
 
         return ReportTheResult(dictResult, ErrorID.Success, LogID);
     }

@@ -37,6 +37,8 @@ public enum ErrorID : int
     SessionError = 3,
     [ErrorIDMapAttribute("Session Key 逾時")]
     SessionTimeout = 4,
+	[ErrorIDMapAttribute("帳號被停權中")]
+	Account_Stoped = 5,
 
     #endregion
 

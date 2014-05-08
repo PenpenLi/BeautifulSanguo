@@ -95,33 +95,6 @@ public partial class GameService : System.Web.Services.WebService
         return ReportTheResult(dictResult, ErrorID.Success, LogID);
     }
 
-    // 取得 session Key
-    string GetSessionKey(string Account)
-    {
-        // 以後再來想怎麼編碼
-        return "SessionKey:" + Account;
-    }
-
-    // 利用 Session Key 取得帳號資料
-    Dictionary<string, object> GetAccountInfoBySessionKey(string SessionKey)
-    {
-        Dictionary<string, object> dictResult = new Dictionary<string, object>();
-        string strCommand = "";
-        List<List<object>> listDBResult = null;
-        strCommand = string.Format("select AccountID, Account, PlayerID, UpdateDate from a_account where SessionKey='{0}'", SessionKey);
-        listDBResult = UseDB.GameDB.DoQueryCommand(strCommand);
-        if (listDBResult.Count == 0)
-        {
-            ReportDBLog(JsonConvert.SerializeObject(ErrorID.SessionError), IDMap.GetEnumAttribute(ErrorID.SessionError));
-            return null;
-        }
-        dictResult["AccountID"] = listDBResult[0][0];
-        dictResult["Account"] = listDBResult[0][1];
-        dictResult["PlayerID"] = listDBResult[0][2];
-        dictResult["UpdateDate"] = listDBResult[0][3];
-        return dictResult;
-    }
-
     #endregion
 
     #region 創角動作
