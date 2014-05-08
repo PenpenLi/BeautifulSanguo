@@ -18,4 +18,9 @@ public class ClientAction
     {
         return new KeyValuePair<ClientActionID, string>(ClientActionID.ToLogin, "");
     }
+
+	// 更新遊戲幣
+
+	// 更新商城幣
+
 }
