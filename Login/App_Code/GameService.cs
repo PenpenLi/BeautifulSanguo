@@ -25,17 +25,6 @@ public partial class GameService : System.Web.Services.WebService
         log4net.Config.XmlConfigurator.Configure(FI);
     }
 
-    // 做 Client 的行為定義
-    void AddClientAction(Dictionary<string, object> dictResult, object oClientAction)
-    {
-        if (dictResult.ContainsKey("ClientAction") == false)
-        {
-            dictResult["ClientAction"] = new List<object>();
-        }
-        List<object> listClientAction = dictResult["ClientAction"] as List<object>;
-        listClientAction.Add(oClientAction);
-    }
-
     // 每一筆都需要寫 Log
     int ReportDBLog(string strMethodName, string strJosn, int PID=0)
     {

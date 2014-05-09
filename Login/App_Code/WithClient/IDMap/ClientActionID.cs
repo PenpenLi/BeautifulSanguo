@@ -24,9 +24,24 @@ class ClientActionIDMapAttribute : Attribute
 /// </summary>
 public enum ClientActionID : int
 {
+    #region 流程控制
     [ClientActionIDMapAttribute("切換到新角介面")]
     ToNewPlayer = 1,
     [ClientActionIDMapAttribute("切換到登入介面")]
     ToLogin = 2,
+    #endregion
+
+    #region PlayerAttr
+    [ClientActionIDMapAttribute("更新 Money")]
+    Playe_Money = 101,
+    [ClientActionIDMapAttribute("更新 Coin")]
+    Player_Coin = 102,
+    [ClientActionIDMapAttribute("更新 LV")]
+    Player_LV = 103,
+    [ClientActionIDMapAttribute("更新 Exp")]
+    Player_Exp = 104,
+    [ClientActionIDMapAttribute("更新玩家姓名")]
+    Player_Name = 105,
+    #endregion
 }
 

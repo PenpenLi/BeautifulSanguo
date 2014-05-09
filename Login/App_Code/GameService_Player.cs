@@ -56,11 +56,18 @@ public partial class GameService : System.Web.Services.WebService
         }
 
 		// 取得資料
-		strCommand = string.Format("select PlayerName, Money, Coin from a_member where PlayerID = {0}", PlayerID);
+		strCommand = string.Format("select PlayerName, Money, Coin, LV, Exp from a_member where PlayerID = {0}", PlayerID);
 		listDBResult = UseDB.GameDB.DoQueryCommand(strCommand);
-		dictResult["PlayerName"] = listDBResult[0][0];
-		dictResult["Money"] = listDBResult[0][1];
-		dictResult["Coin"] = listDBResult[0][2];
+		//dictResult["PlayerName"] = listDBResult[0][0];
+        ClientAction.NameUpdate(dictResult, listDBResult[0][0]);
+		//dictResult["Money"] = listDBResult[0][1];
+        ClientAction.MoneyUpdate(dictResult, listDBResult[0][1]);
+        //dictResult["Coin"] = listDBResult[0][2];
+        ClientAction.CoinUpdate(dictResult, listDBResult[0][2]);
+        //dictResult["LV"] = listDBResult[0][3];
+        ClientAction.LVUpdate(dictResult, listDBResult[0][3]);
+        //dictResult["Exp"] = listDBResult[0][4];
+        ClientAction.ExpUpdate(dictResult, listDBResult[0][4]);
 
         return ReportTheResult(dictResult, ErrorID.Success, LogID);
     }

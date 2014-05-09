@@ -84,12 +84,12 @@ public partial class GameService : System.Web.Services.WebService
         if (PlayerID == 0)
         {
             // 進入新手流程
-            AddClientAction(dictResult, ClientAction.ToNewPlayer());
+            ClientAction.ToNewPlayer(dictResult);
         }
         else
         {
             // 進入主流程
-            AddClientAction(dictResult, ClientAction.ToLogin ());
+            ClientAction.ToLogin(dictResult);
         }
 
         return ReportTheResult(dictResult, ErrorID.Success, LogID);
