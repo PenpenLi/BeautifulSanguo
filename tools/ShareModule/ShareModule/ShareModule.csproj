@@ -39,10 +39,8 @@
     <Compile Include="ErrorID.cs" />
     <Compile Include="ExcelExMgr.cs" />
     <Compile Include="ExcelExUtility.cs" />
-    <Compile Include="MiniJSON.cs" />
     <Compile Include="ShareModule.cs" />
     <Compile Include="Singleton.cs" />
-    <Compile Include="SQLiteUtility.cs" />
     <Compile Include="StockUtility.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Utility_String.cs" />
@@ -52,20 +50,20 @@
     <Reference Include="Ionic.Zip">
       <HintPath>..\..\StockInfo\.net 4.0\Ionic.Zip.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\XLSTranslator\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NPOI">
       <HintPath>..\..\StockInfo\.net 4.0\NPOI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SQLite">
-      <HintPath>C:\CPR\ButifulFight\Project\[DB] SQLite\sqlite_bin\System.Data.SQLite.DLL</HintPath>
-    </Reference>
-    <Reference Include="System.Data.SQLite.Linq">
-      <HintPath>C:\CPR\ButifulFight\Project\[DB] SQLite\sqlite_bin\System.Data.SQLite.Linq.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

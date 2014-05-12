@@ -19,6 +19,8 @@ using NPOI.SS.UserModel;
 using NPOI.HSSF.UserModel;
 using NPOI.HSSF.Util;
 
+using Newtonsoft.Json;
+
 // 單一個 Excel 資料
 public class SingleExcelEx
 {
@@ -208,7 +210,7 @@ public class SingleExcelEx
 		// 做寫檔的動作
 		FileStream file = new FileStream(strFilename, FileMode.Create);//產生檔案
 		StreamWriter File = new StreamWriter(file, Encoding.ASCII);
-		File.Write(Json.Serialize(listResult));
+		File.Write(JsonConvert.SerializeObject(listResult));
 		File.Close();
 		file.Close();
 	}

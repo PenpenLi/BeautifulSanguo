@@ -5,6 +5,7 @@ using System.Text;
 using System.Net;
 using System.IO;
 using System.Threading;
+using Newtonsoft.Json;
 
 /// <summary>
 /// WebPost 的摘要描述
@@ -105,8 +106,8 @@ public class WebPost
         string strConnectURL = string.Format("{0}/{1}", strURL, strMethodName);
         // 參數內容
         Dictionary<string, object> dictResult = new Dictionary<string, object>();
-        dictResult["jsonInfo"] = Json.Serialize (dictArgs);
-        string strContent = Json.Serialize (dictResult);
+        dictResult["jsonInfo"] = JsonConvert.SerializeObject (dictArgs);
+		string strContent = JsonConvert.SerializeObject(dictResult);
         // 呼叫做處理
         _PostHttp(strConnectURL, strContent, callback);
     }
