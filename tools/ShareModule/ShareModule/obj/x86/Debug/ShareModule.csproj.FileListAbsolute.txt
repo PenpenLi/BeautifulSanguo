@@ -25,3 +25,11 @@ F:\MyLife\Business\[Tools] C#\ShareModule\ShareModule\bin\Debug\System.Data.SQLi
 F:\MyLife\Business\[Tools] C#\ShareModule\ShareModule\obj\x86\Debug\ShareModule.exe
 F:\MyLife\Business\[Tools] C#\ShareModule\ShareModule\obj\x86\Debug\ShareModule.pdb
 F:\MyLife\Business\[Tools] C#\ShareModule\ShareModule\obj\x86\Debug\ShareModule.csprojResolveAssemblyReference.cache
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\ShareModule\ShareModule\obj\x86\Debug\ShareModule.exe
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\ShareModule\ShareModule\obj\x86\Debug\ShareModule.pdb
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\ShareModule\ShareModule\bin\Debug\ShareModule.exe
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\ShareModule\ShareModule\bin\Debug\ShareModule.pdb
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\ShareModule\ShareModule\bin\Debug\System.Data.SQLite.DLL
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\ShareModule\ShareModule\bin\Debug\System.Data.SQLite.Linq.dll
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\ShareModule\ShareModule\bin\Debug\System.Data.SQLite.xml
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\ShareModule\ShareModule\obj\x86\Debug\ShareModule.csprojResolveAssemblyReference.cache

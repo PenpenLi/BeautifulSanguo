@@ -196,7 +196,10 @@ public class SingleExcelEx
 	public void SaveToJson(string strFilename = "")
 	{
         if (strFilename == "")
-		    strFilename = Utility.GetFilePath (m_ExcelName) + "JsonTxt\\" + m_SheetName + ".txt";
+        {
+//            strFilename = Utility.GetFilePath(m_ExcelName) + "JsonTxt\\" + m_SheetName + ".txt";
+            strFilename = Utility.GetFilePath(m_ExcelName) + "../Login/GameData/" + m_SheetName + ".txt";
+        }
 		// 轉存成 Json 的格式
 		List<object> listResult = new List<object>();
 		listResult.Add(m_listKey);

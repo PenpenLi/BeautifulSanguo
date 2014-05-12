@@ -11,3 +11,17 @@ C:\Users\dandanshih\Desktop\人生旅程\創業\[Tools] C#\XLSTranslator\XLSTran
 C:\Users\dandanshih\Desktop\人生旅程\創業\[Tools] C#\XLSTranslator\XLSTranslator\bin\Debug\ShareModule.pdb
 C:\Users\dandanshih\Desktop\人生旅程\創業\[Tools] C#\XLSTranslator\XLSTranslator\bin\Debug\NPOI.xml
 C:\Users\dandanshih\Desktop\人生旅程\創業\[Tools] C#\XLSTranslator\XLSTranslator\obj\x86\Debug\XLSTranslator.csprojResolveAssemblyReference.cache
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\XLSTranslator\XLSTranslator\obj\x86\Debug\XLSTranslator.exe
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\XLSTranslator\XLSTranslator\obj\x86\Debug\XLSTranslator.pdb
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\XLSTranslator\XLSTranslator\bin\Debug\XLSTranslator.exe
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\XLSTranslator\XLSTranslator\bin\Debug\XLSTranslator.pdb
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\XLSTranslator\XLSTranslator\bin\Debug\ShareModule.exe
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\XLSTranslator\XLSTranslator\bin\Debug\NPOI.dll
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\XLSTranslator\XLSTranslator\bin\Debug\System.Data.SQLite.dll
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\XLSTranslator\XLSTranslator\bin\Debug\Ionic.Zip.dll
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\XLSTranslator\XLSTranslator\bin\Debug\ShareModule.pdb
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\XLSTranslator\XLSTranslator\bin\Debug\System.Data.SQLite.xml
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\XLSTranslator\XLSTranslator\obj\x86\Debug\XLSTranslator.csprojResolveAssemblyReference.cache
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\XLSTranslator\XLSTranslator\obj\x86\Debug\XLSTranslator.Properties.Resources.resources
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\XLSTranslator\XLSTranslator\obj\x86\Debug\XLSTranslator.XLSTranslator.resources
+C:\Users\dandanshih\Documents\GitHub\BeautifulSanguo\tools\XLSTranslator\XLSTranslator\obj\x86\Debug\XLSTranslator.csproj.GenerateResource.Cache
