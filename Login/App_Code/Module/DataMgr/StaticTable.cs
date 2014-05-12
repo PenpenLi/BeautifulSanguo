@@ -46,6 +46,28 @@ public class StaticTable
 		m_listColumn = JsonConvert.DeserializeObject<List<string>>(listData[1].ToString());
 		m_dictData = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>> (listData[2].ToString());
 	}
+
+	// 取得欄位名稱
+	public List<string> GetColumns()
+	{
+		return m_listColumn;
+	}
+
+	// 取得 Key
+	public List<string> GetKeys()
+	{
+		return m_listKey;
+	}
+
+	// 利用 Key / Value 取得資料
+	public string Get (string strKey, string strColumn)
+	{
+		if (m_dictData.ContainsKey(strKey) == false)
+			return "";
+		if (m_dictData[strKey].ContainsKey(strColumn) == false)
+			return "";
+		return m_dictData[strKey][strColumn];
+	}
 }
 
 // 表單管理器
@@ -66,8 +88,18 @@ public class StaticTableMgr
 		return m_dictMap[strFilename];
 	}
 
-	public static void ClearCache()
+	// 把 Cache 清掉
+	public static void ClearCache(string strTableName="")
 	{
-		m_dictMap.Clear();
+		if (strTableName == "")
+		{
+			m_dictMap.Clear();
+		}
+		else
+		{
+			if (m_dictMap.ContainsKey(strTableName) == false)
+				return;
+			m_dictMap.Remove(strTableName);
+		}
 	}
 }

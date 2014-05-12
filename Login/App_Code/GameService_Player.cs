@@ -32,9 +32,6 @@ public partial class GameService : System.Web.Services.WebService
     [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
     public string Player_GetAttr(string strJson)
     {
-		string strCommand = "";
-		List<List<object>> listDBResult = null;
-
 		// 先寫一筆 Log
         int LogID = ReportDBLog("Player_GetAttr", strJson);
         Dictionary<string, object> dictResult = null;
@@ -56,21 +53,65 @@ public partial class GameService : System.Web.Services.WebService
         }
 
 		// 取得資料
-		strCommand = string.Format("select PlayerName, Money, Coin, LV, Exp from a_member where PlayerID = {0}", PlayerID);
-		listDBResult = UseDB.GameDB.DoQueryCommand(strCommand);
-		//dictResult["PlayerName"] = listDBResult[0][0];
-        ClientAction.NameUpdate(dictResult, listDBResult[0][0]);
-		//dictResult["Money"] = listDBResult[0][1];
-        ClientAction.MoneyUpdate(dictResult, listDBResult[0][1]);
-        //dictResult["Coin"] = listDBResult[0][2];
-        ClientAction.CoinUpdate(dictResult, listDBResult[0][2]);
-        //dictResult["LV"] = listDBResult[0][3];
-        ClientAction.LVUpdate(dictResult, listDBResult[0][3]);
-        //dictResult["Exp"] = listDBResult[0][4];
-        ClientAction.ExpUpdate(dictResult, listDBResult[0][4]);
+		Dictionary<string, object> dictPlayerAttr = _GetPlayerAttrFromDB(PlayerID);
+		ClientAction.NameUpdate(dictResult, dictPlayerAttr["PlayerName"]);
+		ClientAction.MoneyUpdate(dictResult, dictPlayerAttr["Money"]);
+		ClientAction.CoinUpdate(dictResult, dictPlayerAttr["Coin"]);
+		ClientAction.LVUpdate(dictResult, dictPlayerAttr["LV"]);
+		ClientAction.ExpUpdate(dictResult, dictPlayerAttr["Exp"]);
 
         return ReportTheResult(dictResult, ErrorID.Success, LogID);
     }
 
+	// 從 DB 取得資料
+	Dictionary<string, object> _GetPlayerAttrFromDB(int PlayerID)
+	{
+		Dictionary<string, object> dictResult = new Dictionary<string, object>();
+		string strCommand = "";
+		List<List<object>> listDBResult = null;
+		strCommand = string.Format("select PlayerName, Money, Coin, LV, Exp from a_member where PlayerID = {0}", PlayerID);
+		listDBResult = UseDB.GameDB.DoQueryCommand(strCommand);
+		dictResult["PlayerName"] = listDBResult[0][0];
+		dictResult["Money"] = listDBResult[0][1];
+		dictResult["Coin"] = listDBResult[0][2];
+		dictResult["LV"] = listDBResult[0][3];
+		dictResult["Exp"] = listDBResult[0][4];
+		return dictResult;
+	}
+
     #endregion
+
+	// 做加經驗值的動作
+	[WebMethod]
+	[System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+	public string Test_AddPlayerExp()
+	{
+		Dictionary<string, object> dictResult = new Dictionary<string, object>();
+		dictResult["SessionKey"] = "SessionKey:dandan";
+		string strJson = JsonConvert.SerializeObject(dictResult);
+		Dictionary<string, object> dictInfo = new Dictionary<string, object>();
+		dictResult = PaserArgs(strJson, 0, out dictInfo);
+		return _AddPlayerExp(dictInfo, 100);
+	}
+
+	string _AddPlayerExp(Dictionary<string, object> dictInfo, int AddExp)
+	{
+		Dictionary<string, object> dictResult = new Dictionary<string, object>();
+		// 取得玩家編號
+		int PlayerID = System.Convert.ToInt32(dictInfo["PlayerID"]);
+		// 取得玩家資料
+		Dictionary<string, object> dictPlayer = _GetPlayerAttrFromDB(PlayerID);
+		// 取得玩家等級經驗值
+		string strLV = dictPlayer["LV"].ToString();
+		int Exp = System.Convert.ToInt32(dictPlayer["Exp"]);
+		dictResult["LV"] = strLV;
+		dictResult["Exp"] = Exp;
+		// 取得先等級需求的 Exp
+		int NeedExp = PlayerExpTable.instance().GetExpByLV(strLV);
+		dictResult["NeedExp"] = NeedExp;
+		// 先做 Exp 的加上
+		// 判定是否可以升級
+		// 傳回結果
+		return JsonConvert.SerializeObject(dictResult);
+	}
 }
