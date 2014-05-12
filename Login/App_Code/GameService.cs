@@ -21,6 +21,9 @@ public partial class GameService : System.Web.Services.WebService
     // 建構子的處理
     public GameService()
     {
+        // 路徑
+        Utility.WebPath = Server.MapPath(".");
+        // 啟動 log4net
         System.IO.FileInfo FI = new System.IO.FileInfo(Server.MapPath (".") + "\\log4net.config");
         log4net.Config.XmlConfigurator.Configure(FI);
     }

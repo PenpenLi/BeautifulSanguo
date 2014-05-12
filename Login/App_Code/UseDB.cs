@@ -9,6 +9,7 @@ using System.Collections.Generic;
 
 public class UseDB
 {
+    public static string WebPath = "";
 	#region 做 DB 型別的判定
 	static bool _IsMySQL = false;
 	#endregion
