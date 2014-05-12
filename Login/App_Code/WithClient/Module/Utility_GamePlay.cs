@@ -17,4 +17,9 @@ public partial class Utility
     {
         return WebPath + "//" + Filename;
     }
+
+	public static string GetTablePath(string TableName)
+	{
+		return GetWebPath("GameData/" + TableName + ".txt");
+	}
 }

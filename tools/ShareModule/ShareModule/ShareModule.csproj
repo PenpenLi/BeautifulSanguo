@@ -34,9 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ClientAction.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="ErrorID.cs" />
     <Compile Include="ExcelExMgr.cs" />
     <Compile Include="ExcelExUtility.cs" />
     <Compile Include="ShareModule.cs" />

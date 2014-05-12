@@ -19,6 +19,7 @@ using NPOI.SS.UserModel;
 using NPOI.HSSF.UserModel;
 using NPOI.HSSF.Util;
 
+// 導入新的 Json 壓法
 using Newtonsoft.Json;
 
 // 單一個 Excel 資料
