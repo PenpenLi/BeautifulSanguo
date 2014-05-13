@@ -91,7 +91,7 @@ public partial class GameService : System.Web.Services.WebService
 		string strJson = JsonConvert.SerializeObject(dictResult);
 		Dictionary<string, object> dictInfo = new Dictionary<string, object>();
 		dictResult = PaserArgs(strJson, 0, out dictInfo);
-		return _AddPlayerExp(dictInfo, 100);
+		return _AddPlayerExp(dictInfo, 10);
 	}
 
 	string _AddPlayerExp(Dictionary<string, object> dictInfo, int AddExp)
@@ -102,15 +102,27 @@ public partial class GameService : System.Web.Services.WebService
 		// 取得玩家資料
 		Dictionary<string, object> dictPlayer = _GetPlayerAttrFromDB(PlayerID);
 		// 取得玩家等級經驗值
-		string strLV = dictPlayer["LV"].ToString();
+		int LV = System.Convert.ToInt32 ( dictPlayer["LV"].ToString() );
 		int Exp = System.Convert.ToInt32(dictPlayer["Exp"]);
-		dictResult["LV"] = strLV;
+		dictResult["LV"] = LV;
 		dictResult["Exp"] = Exp;
+        dictResult["AddExp"] = AddExp;
 		// 取得先等級需求的 Exp
-		int NeedExp = PlayerExpTable.instance().GetExpByLV(strLV);
+		int NeedExp = PlayerExpTable.instance().GetExpByLV(LV);
 		dictResult["NeedExp"] = NeedExp;
 		// 先做 Exp 的加上
-		// 判定是否可以升級
+        Exp += AddExp;
+        if (Exp >= NeedExp)
+        {
+            LV += 1;
+            Exp -= NeedExp;
+        }
+        dictResult["NewLV"] = LV;
+        dictResult["NewExp"] = Exp;
+        // 更新 DB
+        string strCommand = string.Format("update a_member set LV={0}, Exp={1} where PlayerID = {2}", LV, Exp, PlayerID);
+        dictResult["strCommand"] = strCommand;
+        UseDB.GameDB.DoCommand(strCommand);
 		// 傳回結果
 		return JsonConvert.SerializeObject(dictResult);
 	}

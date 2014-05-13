@@ -39,17 +39,17 @@ public partial class GameService : System.Web.Services.WebService
         return LogID;
     }
 
-	[WebMethod]
-	[System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
-	public string Test_StaticTable()
-	{
-		StaticTableMgr.ClearCache();
-		// 取得表單名稱
-		string strTablePath = Utility.GetTablePath("levelexp");
-		// 測試一下資料
-		StaticTable Table = StaticTableMgr.ReadTable(strTablePath);
-		return "";
-	}
+    //[WebMethod]
+    //[System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    //public string Test_StaticTable()
+    //{
+    //    StaticTableMgr.ClearCache();
+    //    // 取得表單名稱
+    //    string strTablePath = Utility.GetTablePath("levelexp");
+    //    // 測試一下資料
+    //    StaticTable Table = StaticTableMgr.ReadTable(strTablePath);
+    //    return "";
+    //}
 
     #region 動態呼叫的入口
 

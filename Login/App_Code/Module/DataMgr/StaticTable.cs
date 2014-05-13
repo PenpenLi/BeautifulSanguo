@@ -32,6 +32,7 @@ public class StaticTable
 	// 從檔案把資料做載入的動作
 	void LoadFromFile(string strFilename)
 	{
+        strFilename = Utility.GetTablePath(strFilename);
 		// 做開檔動作
 		string strContents = File.ReadAllText(strFilename);
 		// 記錄檔案名稱
