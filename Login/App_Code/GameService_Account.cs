@@ -171,6 +171,8 @@ public partial class GameService : System.Web.Services.WebService
         strCommand = string.Format("update a_account set PlayerID={0} where AccountID={1}", PlayerID, AccountID);
         UseDB.GameDB.DoCommand(strCommand);
 
+        // 產生一隻新的 NPC 給玩家使用
+
         // 進入主流程
         return ReportTheResult(dictResult, ErrorID.Success, LogID);
     }

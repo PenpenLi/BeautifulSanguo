@@ -60,6 +60,11 @@ public class StaticTable
 		return m_listKey;
 	}
 
+    public Dictionary<string, Dictionary<string, string>> GetData()
+    {
+        return m_dictData;
+    }
+
 	// 利用 Key / Value 取得資料
 	public string Get (string strKey, string strColumn)
 	{
