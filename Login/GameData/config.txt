@@ -1,0 +1,1 @@
+[["CreatePlayer_Start_Partner"],["ID","Value","Desc"],{"CreatePlayer_Start_Partner":{"ID":"CreatePlayer_Start_Partner","Value":"290,300,310","Desc":"????"}}]

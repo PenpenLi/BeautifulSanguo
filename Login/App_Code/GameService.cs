@@ -31,6 +31,7 @@ public partial class GameService : System.Web.Services.WebService
     // 每一筆都需要寫 Log
     int ReportDBLog(string strMethodName, string strJosn, int PID=0)
     {
+        log4net.LogManager.GetLogger("ReportDBLog").DebugFormat ("strMethod:{0}, strJson:{1}, PID:{2}");
         strMethodName = Utility.TranslateDBString(strMethodName);
         strJosn = Utility.TranslateDBString(strJosn);
 		string strCommand = string.Format("insert into L_WebMethod (MethodName, Args, PID) values ('{0}', '{1}', {2})"+UseDB.GETID, strMethodName, strJosn, PID);
@@ -81,7 +82,9 @@ public partial class GameService : System.Web.Services.WebService
 	// 統一的錯誤處理
 	string ReportTheResult(Dictionary<string, object> dictResult, ErrorID IErrorID, int LogID)
 	{
-		return JsonConvert.SerializeObject (ReportTheResultDict(dictResult, IErrorID, LogID));
+        string strJson = JsonConvert.SerializeObject (ReportTheResultDict(dictResult, IErrorID, LogID));
+        log4net.LogManager.GetLogger("ReportTheResult").DebugFormat("Result:{0}", strJson);
+        return strJson;
 	}
 
 	Dictionary<string, object> ReportTheResultDict(Dictionary<string, object> dictResult, ErrorID IErrorID, int LogID)

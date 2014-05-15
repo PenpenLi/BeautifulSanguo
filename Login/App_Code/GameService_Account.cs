@@ -114,6 +114,7 @@ public partial class GameService : System.Web.Services.WebService
     [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
     public string Account_CreatePlayer(string strJson)
     {
+        log4net.LogManager.GetLogger("Account_CreatePlayer").DebugFormat("Args:{0}", strJson);
         // 先寫一筆資料
         int LogID = ReportDBLog ("Account_CreatePlayer", strJson);
         string strCommand = "";
@@ -172,6 +173,10 @@ public partial class GameService : System.Web.Services.WebService
         UseDB.GameDB.DoCommand(strCommand);
 
         // 產生一隻新的 NPC 給玩家使用
+        string strCreateNPC = ConfigTable.instance().Get("CreatePlayer_Start_Partner");
+        List<string> listCreateNPC = Utility.Split(strCreateNPC, ",");
+        string strNPC = Utility.GetRange(listCreateNPC);
+        // 送給玩家
 
         // 進入主流程
         return ReportTheResult(dictResult, ErrorID.Success, LogID);
