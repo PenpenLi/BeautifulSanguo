@@ -39,6 +39,8 @@ public enum ErrorID : int
     SessionTimeout = 4,
 	[ErrorIDMapAttribute("帳號被停權中")]
 	Account_Stoped = 5,
+	[ErrorIDMapAttribute("NPC ID 錯誤")]
+	NPC_ID_Error = 6,
 
     #endregion
 
@@ -63,6 +65,12 @@ public enum ErrorID : int
 
     [ErrorIDMapAttribute("沒有角色編號")]
     Player_GetAttr_No_Player_ID = 10201,
+
+	// Create NPC Error
+	[ErrorIDMapAttribute("產生 NPC 的參數出錯")]
+	NPC_Create_Args_Error = 10301,
+
+
 
 }
 

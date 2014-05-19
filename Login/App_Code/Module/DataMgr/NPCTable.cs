@@ -14,7 +14,8 @@ public class NPCTable : Singleton<NPCTable>
         LoadFromFile();
     }
 
-    Dictionary<string, Dictionary<string, string>> m_dictNPC = null; 
+    Dictionary<string, Dictionary<string, string>> m_dictNPC = null;
+
     // 先從資料表讀進來
     void LoadFromFile()
     {
@@ -25,4 +26,14 @@ public class NPCTable : Singleton<NPCTable>
         StaticTableMgr.ClearCache(strTableName);
     }
 
+	public bool HasKey(object oKey)
+	{
+		return m_dictNPC.ContainsKey(oKey.ToString());
+	}
+	
+	// 取得 NPC 列表
+	public List<string> GetKey()
+	{
+		return new List<string>(m_dictNPC.Keys);
+	}
 }

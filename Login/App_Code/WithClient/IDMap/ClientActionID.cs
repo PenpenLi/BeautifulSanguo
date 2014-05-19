@@ -43,5 +43,15 @@ public enum ClientActionID : int
     [ClientActionIDMapAttribute("更新玩家姓名")]
     Player_Name = 105,
     #endregion
+
+	// 更新 NPC 資料
+	[ClientActionIDMapAttribute("NPC資料更新")]
+	NPC_Update = 201,
+	// 更新 NPC 的順序
+	[ClientActionIDMapAttribute("NPC資料順序")]
+	NPC_POS = 202,
+	// 刪除 NPC 資料
+	[ClientActionIDMapAttribute("刪除 NPC 資料")]
+	NPC_Delete = 203,
 }
 

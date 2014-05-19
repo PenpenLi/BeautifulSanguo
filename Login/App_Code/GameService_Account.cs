@@ -84,13 +84,15 @@ public partial class GameService : System.Web.Services.WebService
         if (PlayerID == 0)
         {
             // 進入新手流程
-            ClientAction.ToNewPlayer(dictResult);
+            //ClientAction.ToNewPlayer(dictResult);
+			ClientAction.AddClientAction(dictInfo, ClientActionID.ToNewPlayer);
         }
         else
         {
             // 進入主流程
-            ClientAction.ToLogin(dictResult);
-        }
+            //ClientAction.ToLogin(dictResult);
+			ClientAction.AddClientAction(dictInfo, ClientActionID.ToLogin);
+		}
 
         return ReportTheResult(dictResult, ErrorID.Success, LogID);
     }
@@ -124,7 +126,6 @@ public partial class GameService : System.Web.Services.WebService
         Dictionary<string, object> dictResult = new Dictionary<string, object>();
 
         // 取得資料
-        //Dictionary<string, object> dictInfo = Json.Deserialize(strJson) as Dictionary<string, object>;
 		Dictionary<string, object> dictInfo = JsonConvert.DeserializeObject<Dictionary<string, object>>(strJson);
         if (dictInfo == null)
         {

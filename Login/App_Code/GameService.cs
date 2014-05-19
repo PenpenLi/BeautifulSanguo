@@ -40,18 +40,6 @@ public partial class GameService : System.Web.Services.WebService
         return LogID;
     }
 
-    //[WebMethod]
-    //[System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
-    //public string Test_StaticTable()
-    //{
-    //    StaticTableMgr.ClearCache();
-    //    // 取得表單名稱
-    //    string strTablePath = Utility.GetTablePath("levelexp");
-    //    // 測試一下資料
-    //    StaticTable Table = StaticTableMgr.ReadTable(strTablePath);
-    //    return "";
-    //}
-
     #region 動態呼叫的入口
 
     // 統一的入口
@@ -161,5 +149,70 @@ public partial class GameService : System.Web.Services.WebService
 		return null;
 	}
 	#endregion
+
+	// 被拿來做 Copy 的樣版
+	//[WebMethod]
+	//[System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+	public string GameService_Template(string strJson)
+	{
+		// 先寫一筆 Log
+		int LogID = ReportDBLog("GameService_Template", strJson);
+		Dictionary<string, object> dictResult = null;
+
+		// 先解析資料
+		Dictionary<string, object> dictInfo = new Dictionary<string, object>();
+		dictResult = PaserArgs(strJson, LogID, out dictInfo);
+		if (dictResult != null)
+		{
+			return JsonConvert.SerializeObject(dictResult);
+		}
+		dictResult = new Dictionary<string, object>();
+
+		// 取得帳號分析
+		int PlayerID = System.Convert.ToInt32(dictInfo["PlayerID"]);
+		if (PlayerID == 0)
+		{
+			return ReportTheResult(dictResult, ErrorID.Player_GetAttr_No_Player_ID, LogID);
+		}
+
+		return ReportTheResult(dictResult, ErrorID.Success, LogID);
+	}
+
+	// 做 copy 的動作
+	void CopyDBListToDict(Dictionary<string, object> dictResult, List<List<object>> listDBResult, int Index, params object[] args)
+	{
+		for (int ID = 0; ID < args.Length; ID++)
+		{
+			dictResult[args[ID].ToString()] = listDBResult[Index][ID];
+		}
+	}
+
+	// 取得 DB 的資料
+	Dictionary<string, object> _GetNPCAttrFromDB(int NPCID)
+	{
+		// 把資料從 DB Copy 出來
+		string strCommand = string.Format("select ID, NPCID, PlayerID, LV, Exp from a_npc where ID = {0}", NPCID);
+		List<List<object>> listDBResult = UseDB.GameDB.DoQueryCommand(strCommand);
+		Dictionary<string, object> dictResult = new Dictionary<string, object>();
+		if (listDBResult.Count == 0)
+			return dictResult;
+		// 把 Copy 出來的資料貼到 Dictionary 去
+		CopyDBListToDict(dictResult, listDBResult, 0, "ID", "NPCID", "PlayerID", "LV", "Exp");
+		return dictResult;
+	}
+
+	// 從 DB 取得資料
+	Dictionary<string, object> _GetPlayerAttrFromDB(int PlayerID)
+	{
+		// 把資料從 DB 取出來
+		Dictionary<string, object> dictResult = new Dictionary<string, object>();
+		string strCommand = "";
+		List<List<object>> listDBResult = null;
+		strCommand = string.Format("select PlayerName, Money, Coin, LV, Exp from a_member where PlayerID = {0}", PlayerID);
+		listDBResult = UseDB.GameDB.DoQueryCommand(strCommand);
+		// 把 Copy 出來的資料貼到 Dictionary 去
+		CopyDBListToDict(dictResult, listDBResult, 0, "PlayerName", "Money", "Coin", "LV", "Exp");
+		return dictResult;
+	}
 
 }

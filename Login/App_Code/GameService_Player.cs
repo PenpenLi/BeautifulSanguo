@@ -54,33 +54,23 @@ public partial class GameService : System.Web.Services.WebService
 
 		// 取得資料
 		Dictionary<string, object> dictPlayerAttr = _GetPlayerAttrFromDB(PlayerID);
-		ClientAction.NameUpdate(dictResult, dictPlayerAttr["PlayerName"]);
-		ClientAction.MoneyUpdate(dictResult, dictPlayerAttr["Money"]);
-		ClientAction.CoinUpdate(dictResult, dictPlayerAttr["Coin"]);
-		ClientAction.LVUpdate(dictResult, dictPlayerAttr["LV"]);
-		ClientAction.ExpUpdate(dictResult, dictPlayerAttr["Exp"]);
+		//ClientAction.NameUpdate(dictResult, dictPlayerAttr["PlayerName"]);
+		ClientAction.AddClientAction(dictResult, ClientActionID.Player_Name, dictPlayerAttr["PlayerName"]);
+		//ClientAction.MoneyUpdate(dictResult, dictPlayerAttr["Money"]);
+		ClientAction.AddClientAction(dictResult, ClientActionID.Playe_Money, dictPlayerAttr["Money"]);
+		//ClientAction.CoinUpdate(dictResult, dictPlayerAttr["Coin"]);
+		ClientAction.AddClientAction(dictResult, ClientActionID.Player_Coin, dictPlayerAttr["Coin"]);
+		//ClientAction.LVUpdate(dictResult, dictPlayerAttr["LV"]);
+		ClientAction.AddClientAction(dictResult, ClientActionID.Player_LV, dictPlayerAttr["LV"]);
+		//ClientAction.ExpUpdate(dictResult, dictPlayerAttr["Exp"]);
+		ClientAction.AddClientAction(dictResult, ClientActionID.Player_Exp, dictPlayerAttr["Exp"]);
 
         return ReportTheResult(dictResult, ErrorID.Success, LogID);
     }
 
-	// 從 DB 取得資料
-	Dictionary<string, object> _GetPlayerAttrFromDB(int PlayerID)
-	{
-		Dictionary<string, object> dictResult = new Dictionary<string, object>();
-		string strCommand = "";
-		List<List<object>> listDBResult = null;
-		strCommand = string.Format("select PlayerName, Money, Coin, LV, Exp from a_member where PlayerID = {0}", PlayerID);
-		listDBResult = UseDB.GameDB.DoQueryCommand(strCommand);
-		dictResult["PlayerName"] = listDBResult[0][0];
-		dictResult["Money"] = listDBResult[0][1];
-		dictResult["Coin"] = listDBResult[0][2];
-		dictResult["LV"] = listDBResult[0][3];
-		dictResult["Exp"] = listDBResult[0][4];
-		return dictResult;
-	}
-
     #endregion
 
+	#region 玩家經驗值
 	// 做加經驗值的動作
 	[WebMethod]
 	[System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
@@ -126,4 +116,62 @@ public partial class GameService : System.Web.Services.WebService
 		// 傳回結果
 		return JsonConvert.SerializeObject(dictResult);
 	}
+
+	#endregion
+
+	#region 玩家 NPC
+
+	[WebMethod]
+	[System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+	public string Test_Player_GetNPC()
+	{
+		Dictionary<string, object> dictResult = new Dictionary<string, object>();
+		dictResult["SessionKey"] = "SessionKey:dandan";
+		return Player_GetNPC(JsonConvert.SerializeObject (dictResult));
+	}
+
+	[WebMethod]
+	[System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+	public string Player_GetNPC(string strJson)
+	{
+		// 先寫一筆 Log
+		int LogID = ReportDBLog("Player_GetAttr", strJson);
+		Dictionary<string, object> dictResult = null;
+
+		// 先解析資料
+		Dictionary<string, object> dictInfo = new Dictionary<string, object>();
+		dictResult = PaserArgs(strJson, LogID, out dictInfo);
+		if (dictResult != null)
+		{
+			return JsonConvert.SerializeObject(dictResult);
+		}
+		dictResult = new Dictionary<string, object>();
+
+		// 取得帳號分析
+		int PlayerID = System.Convert.ToInt32(dictInfo["PlayerID"]);
+		if (PlayerID == 0)
+		{
+			return ReportTheResult(dictResult, ErrorID.Player_GetAttr_No_Player_ID, LogID);
+		}
+
+		// 取得所有的玩家身上的 NPC 資料
+		string strCommand = string.Format("select ID, NPCID, PlayerID, LV, Exp from a_npc where PlayerID = {0}", PlayerID);
+		List<List<object>> listDBREsult = UseDB.GameDB.DoQueryCommand(strCommand);
+		List<string> listID = new List<string>();
+		for (int Index = 0; Index < listDBREsult.Count; Index++)
+		{
+			// 取得資料
+			Dictionary<string, object> dictData = new Dictionary<string, object>();
+			CopyDBListToDict(dictData, listDBREsult, Index, "ID", "NPCID", "PlayerID", "LV", "Exp");
+			ClientAction.AddClientAction(dictResult, ClientActionID.NPC_Update, dictData);
+			// 記錄 ID
+			listID.Add(listDBREsult[Index][0].ToString());
+		}
+		// 更新位置
+		ClientAction.AddClientAction(dictResult, ClientActionID.NPC_POS, listID);
+		// 回傳結果
+		return ReportTheResult(dictResult, ErrorID.Success, LogID);
+	}
+
+	#endregion
 }
