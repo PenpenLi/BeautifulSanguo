@@ -16,6 +16,8 @@ using Newtonsoft.Json;
 // 若要允許使用 ASP.NET AJAX 從指令碼呼叫此 Web 服務，請取消註解下一行。
 public partial class GameService : System.Web.Services.WebService
 {
+	#region 產生NPC
+
 	// 測試產生一隻 NPC
 	[WebMethod]
 	[System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
@@ -86,5 +88,19 @@ public partial class GameService : System.Web.Services.WebService
 		// 回報結果
 		return ReportTheResultDict(dictResult, ErrorID.Success, LogID);
 	}
+
+	#endregion
+
+	#region 升級 NPC LV
+
+	#endregion
+
+	#region 升級 NPC degree
+
+	#endregion
+
+	#region 刪除 NPC
+
+	#endregion
 
 }
