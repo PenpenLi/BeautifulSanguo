@@ -41,6 +41,8 @@ public enum ErrorID : int
 	Account_Stoped = 5,
 	[ErrorIDMapAttribute("NPC ID 錯誤")]
 	NPC_ID_Error = 6,
+	[ErrorIDMapAttribute("Item ID 錯誤")]
+	Item_Not_Exist = 7,
 
     #endregion
 
@@ -70,7 +72,10 @@ public enum ErrorID : int
 	[ErrorIDMapAttribute("產生 NPC 的參數出錯")]
 	NPC_Create_Args_Error = 10301,
 
-
+	[ErrorIDMapAttribute("想產道具沒有 ItemID 輸入")]
+	Item_CreateItem_No_ItemID = 10401,
+	[ErrorIDMapAttribute("產道具輸入負數或是0")]
+	Item_CreateItem_Number_Negative = 10402,
 
 }
 

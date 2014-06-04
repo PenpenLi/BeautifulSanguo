@@ -16,5 +16,8 @@ using Newtonsoft.Json;
 // 若要允許使用 ASP.NET AJAX 從指令碼呼叫此 Web 服務，請取消註解下一行。
 public partial class GameService : System.Web.Services.WebService
 {
+	// 測試寶石合成
+	
+	// 寶石合成
 
 }

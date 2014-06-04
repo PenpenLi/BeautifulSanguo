@@ -1,0 +1,1 @@
+[["atk","def","leader","d_atk","d_def","cri","d_cri","flee"],["ID","Desc"],{"atk":{"ID":"atk","Desc":"??"},"def":{"ID":"def","Desc":"??"},"leader":{"ID":"leader","Desc":"??"},"d_atk":{"ID":"d_atk","Desc":"??"},"d_def":{"ID":"d_def","Desc":"??"},"cri":{"ID":"cri","Desc":"??"},"d_cri":{"ID":"d_cri","Desc":"??"},"flee":{"ID":"flee","Desc":"??"}}]

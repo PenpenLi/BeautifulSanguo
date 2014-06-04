@@ -12,6 +12,13 @@ using System.Text;
 public partial class Utility
 {
 	//--------------------------------------------------------
+	// 把二個 Dictionary Copy 在一起
+	//--------------------------------------------------------
+	public static Dictionary<string, T> DictUnionDict<T> (Dictionary<string, T> dict0, Dictionary<string, T> dict1)
+	{
+		return dict0.Union(dict1).ToDictionary(k => k.Key, v => v.Value);
+	}
+	//--------------------------------------------------------
 	// 網頁類的操作
 	//--------------------------------------------------------
 	// 從網頁抓取資料
