@@ -25,9 +25,9 @@ public partial class GameService : System.Web.Services.WebService
         string strResult = "";
         Dictionary<string, object> dictResult = new Dictionary<string, object>();
         dictResult["Account"] = "dandan";
-        dictResult["Password"] = "silveran";
-        Account_Check(JsonConvert.SerializeObject(dictResult));
-        return "Finish Test_Account_Check:" + strResult;
+        dictResult["Password"] = "silver";
+        strResult = Account_Check(JsonConvert.SerializeObject(dictResult));
+        return "[Finish Test_Account_Check] " + strResult;
     }
 
     // 做帳號密碼的檢查
@@ -39,7 +39,6 @@ public partial class GameService : System.Web.Services.WebService
         int LogID = ReportDBLog("Account_Check", strJson);
         // 開始準備做處理
         Dictionary<string, object> dictResult = new Dictionary<string, object>();
-//        Dictionary<string, object> dictInfo = Json.Deserialize(strJson) as Dictionary<string, object>;
 		Dictionary<string, object> dictInfo = JsonConvert.DeserializeObject<Dictionary<string, object>>(strJson);
         string strCommand = "";
         List<List<object>> listDBResult = null;
@@ -84,14 +83,12 @@ public partial class GameService : System.Web.Services.WebService
         if (PlayerID == 0)
         {
             // 進入新手流程
-            //ClientAction.ToNewPlayer(dictResult);
-			ClientAction.AddClientAction(dictInfo, ClientActionID.ToNewPlayer);
+            ClientAction.AddClientAction(dictResult, ClientActionID.ToNewPlayer);
         }
         else
         {
             // 進入主流程
-            //ClientAction.ToLogin(dictResult);
-			ClientAction.AddClientAction(dictInfo, ClientActionID.ToLogin);
+            ClientAction.AddClientAction(dictResult, ClientActionID.ToLogin);
 		}
 
         return ReportTheResult(dictResult, ErrorID.Success, LogID);

@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Author : dandanshih
+// Desc : 轉換程式
+// [History]
+// 2014/6/14 修改輸出目錄到 Client / Server
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -65,7 +69,10 @@ namespace XLSTranslator
                 foreach (string SheetName in listSheetName)
                 {
                     SingleExcelEx Single = dictExcel[SheetName];
-                    Single.SaveToJson();
+                    // 做存檔的動作 - Server
+                    Single.SaveToJson("../Login/GameData/");
+                    // 做存檔的動作 - Client
+                    Single.SaveToJson("../../SanguoClient/Assets/JsonTxt/");
                 }
             }
             MessageBox.Show("轉換成功");
