@@ -57,9 +57,9 @@ public partial class GameService : System.Web.Services.WebService
 		//ClientAction.NameUpdate(dictResult, dictPlayerAttr["PlayerName"]);
 		ClientAction.AddClientAction(dictResult, ClientActionID.Player_Name, dictPlayerAttr["PlayerName"]);
 		//ClientAction.MoneyUpdate(dictResult, dictPlayerAttr["Money"]);
-		ClientAction.AddClientAction(dictResult, ClientActionID.Playe_Money, dictPlayerAttr["Money"]);
+        ClientAction.AddClientAction(dictResult, ClientActionID.Game_Money, dictPlayerAttr["Money"]);
 		//ClientAction.CoinUpdate(dictResult, dictPlayerAttr["Coin"]);
-		ClientAction.AddClientAction(dictResult, ClientActionID.Player_Coin, dictPlayerAttr["Coin"]);
+		ClientAction.AddClientAction(dictResult, ClientActionID.Game_Coin, dictPlayerAttr["Coin"]);
 		//ClientAction.LVUpdate(dictResult, dictPlayerAttr["LV"]);
 		ClientAction.AddClientAction(dictResult, ClientActionID.Player_LV, dictPlayerAttr["LV"]);
 		//ClientAction.ExpUpdate(dictResult, dictPlayerAttr["Exp"]);

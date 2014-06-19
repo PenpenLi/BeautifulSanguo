@@ -33,9 +33,9 @@ public enum ClientActionID : int
 
     #region PlayerAttr
     [ClientActionIDMapAttribute("更新 Money")]
-    Playe_Money = 101,
+    Game_Money = 101,
     [ClientActionIDMapAttribute("更新 Coin")]
-    Player_Coin = 102,
+    Game_Coin = 102,
     [ClientActionIDMapAttribute("更新 LV")]
     Player_LV = 103,
     [ClientActionIDMapAttribute("更新 Exp")]
