@@ -76,6 +76,8 @@ public partial class GameService : System.Web.Services.WebService
         // 回傳結果
         int PlayerID = System.Convert.ToInt32(listDBResult[0][2]);
         dictResult["Result"] = ErrorID.Success;
+        dictResult["Account"] = strAccount;
+        dictResult["Password"] = strPassword;
         dictResult["AccountID"] = AccountID;
         dictResult["PlayerID"] = PlayerID;
         dictResult["SessionKey"] = strSessionKey;
