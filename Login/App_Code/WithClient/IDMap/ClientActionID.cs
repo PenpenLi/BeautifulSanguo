@@ -29,6 +29,8 @@ public enum ClientActionID : int
     ToNewPlayer = 1,
     [ClientActionIDMapAttribute("切換到登入介面")]
     ToLogin = 2,
+    [ClientActionIDMapAttribute("顯示 MessageBox")]
+    ShowMessage = 3,
     #endregion
 
     #region PlayerAttr
