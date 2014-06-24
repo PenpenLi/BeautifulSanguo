@@ -30,7 +30,8 @@ public partial class GameService : System.Web.Services.WebService
         return "[Finish Test_Account_Check] " + strResult;
     }
 
-    // 做帳號密碼的檢查
+    // 做帳號密碼的檢查 
+    // (has client)
     [WebMethod]
     [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
     public string Account_Check(string strJson)

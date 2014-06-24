@@ -30,6 +30,7 @@ public partial class GameService : System.Web.Services.WebService
 
     [WebMethod]
     [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    // (has client)
     public string Player_GetAttr(string strJson)
     {
 		// 先寫一筆 Log
